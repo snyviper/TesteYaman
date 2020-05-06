@@ -1,9 +1,9 @@
 public class Carro {
 
-    public String cor;
-    public String modelo;
-    public Double velocidadeAtual;
-    public final Double velocidadeMaxima;
+    private String cor;
+    private String modelo;
+    private Double velocidadeAtual;
+    private final Double velocidadeMaxima;
 
     public Boolean ligado = false;
 
@@ -12,7 +12,7 @@ public class Carro {
     }
 
     public void setCor(String cor){
-        this.cor = cores;
+        this.cor = cor;
     }
 
     public String getModelo(){
@@ -35,44 +35,54 @@ public class Carro {
         return this.ligado;
     }
 
-    public Carro(String cor, String modelo, Double velocidadeMáxima){
-        velocidadeAtual = 0;
+    public Carro(String cor, String modelo, Double velocidadeMaxima){
+        velocidadeAtual = 0.0;
         this.cor = cor;
         this.modelo = modelo;
         this.velocidadeMaxima = velocidadeMaxima;
     }
 
 
-
     //liga o carro
     public Boolean ligaedesliga() {
         if (!this.ligado){
             this.ligado = true;
-            System.out.println("O carro foi desligado");
+            System.out.println("O carro foi ligado");
         } else {
             this.ligado = false;
-            System.out.println("O carro foi ligado");
+            this.velocidadeAtual = 0.0;
+            System.out.println("O carro foi desligado");
         }
         return this.ligado;
     }
     //acelera uma certa quantidade
     public void acelera(Double quantidade) {
-        Double velocidadeNova = this.velocidadeAtual + quantidade;
-        if (velocidadeNova < this.velocidadeMaxima){
-            this.velocidadeAtual = velocidadeNova;
+        if(this.getLigado()){
+            Double velocidadeNova = this.velocidadeAtual + quantidade;
+            if (velocidadeNova < this.velocidadeMaxima){
+                this.velocidadeAtual = velocidadeNova;
+            }
+            else{
+                this.velocidadeAtual = this.velocidadeMaxima;
+            }
         }
     }
     //devolve a marcha do carro
     public Integer pegaMarcha() {
-        if (this.velocidadeAtual < 0,0) {
-            return -1;
+        if(getLigado()){
+            if (this.velocidadeAtual < 0.0) {
+                return -1;
+            }
+            if (this.velocidadeAtual >= 0.0 && this.velocidadeAtual < 40) {
+                return 1;
+            }
+            if (this.velocidadeAtual >= 40 && this.velocidadeAtual < 80) {
+                return 2;
+            }
+            return 3;
         }
-        if (this.velocidadeAtual >= 0.00 || this.velocidadeAtual < 40) {
-            return 1;
+        else{
+            return 0;
         }
-        if (this.velocidadeAtual >= 40 && this.velocidadeAtual < 80) {
-            return 2;
-        }
-        return 3;
     }
 }
